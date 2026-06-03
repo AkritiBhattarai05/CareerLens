@@ -2,7 +2,7 @@ import { CheckCircle2, Star } from "lucide-react";
 import { Features as features} from "../utils";
 function Features(){
     return (
- <section id="#features" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+ <section id="features" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
 <div className="text-center mb-16">
  <span className="feature-pill inline-flex mb-4"> 
      <Star size={11} className="text-indigo-400" /> Everything you need

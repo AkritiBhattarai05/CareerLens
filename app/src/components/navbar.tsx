@@ -42,11 +42,16 @@ md:px-12 py-4 bg-[#18245a]/98 backdrop-blur-xl border-b border-white/10">
     transition-colors"> 
      InterviewPrep
  </Link>
+
+
+ <Link to={"/guide"} className="hover:text-white transition-colors">
+  FAQ
+</Link>
  </div>
 
  <div className="hidden md:flex items-center gap-3">
     {
-        isAuth ?<Link to={'/account'} className="flex items-center gap-2 hover:opacity-80 transition-opacity"> <img src="/user.png" alt="" className="w-8 h-8 rounded-full object-cover ring-2 ring-white"/>
+        isAuth ?<Link to={'/account'} className="flex items-center gap-2 hover:opacity-80 transition-opacity"> <img src="/main.png" alt="" className="w-9 h-9 rounded-full object-cover ring-2 ring-white"/>
            
             <span className="text-sm text-white/70">{user?.name?.split(' ')[0]}</span>
             </Link>
