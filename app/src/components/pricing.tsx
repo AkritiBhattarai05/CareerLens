@@ -81,11 +81,16 @@ return (
 
 
 
+
+
+
+
+
 const Pricing = () => {
   return <section id="pricing" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
     <div className="text-center mb-16">
       <span className="feature-pill inline-flex mb-4">
-        <Shield size={11} className="text-emerald-400"/> Simple pricing
+        <Shield size={11} className="text-orange-300co"/> Simple pricing
       </span>
 <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight" style={{fontFamily:"Syne', sans-serif"}}
 >
@@ -112,7 +117,7 @@ const Pricing = () => {
               <span
                 className={`absolute -top-2 left-1/2 -translate-x-1/2 text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${
                   plan.highlight
-                    ? "bg-linear-to-r from-indigo-500 to-emerald-400 text-white"
+                    ? "bg-linear-to-r from-orange-300 to-yellow-500 text-white"
                     : "bg-white/10 text-white/60"
                 }`}
               >
@@ -147,10 +152,10 @@ const Pricing = () => {
                 >
                   <CheckCircle
                     size={14}
-                    className="text-emerald-400 shrink-0 mt-0.5"
+                    className="text-yellow-500 shrink-0 mt-0.5"
                   />
                   {item}
-                </li>
+                </li> 
               ))}
             </ul>
  <PlanCTA plan={plan} highlight={plan.highlight} />

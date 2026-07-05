@@ -13,7 +13,7 @@ import jsPDF from "jspdf";
 export const plans = [
   {
     name: "Free",
-    price: "₹0",
+    price: "Rs.0",
     period: "",
     badge: null,
     desc: "Try before you commit",
@@ -22,14 +22,14 @@ export const plans = [
       "ATS score report",
       "Basic job matches",
       "1 resume template",
-      "Community support",
+      
     ],
     cta: "Start Free",
     highlight: false,
   },
   {
     name: "Pro Monthly",
-    price: "Rs.299",
+    price: "Rs.1500",
     period: "/ month",
     badge: "Most Flexible",
     desc: "Full access, cancel anytime",
@@ -37,17 +37,16 @@ export const plans = [
       "Unlimited resume analyses",
       "Full ATS + strength/weakness report",
       "Unlimited job matching",
-      "All resume templates + PDF export",
       "Unlimited interview prep",
-      "Priority AI processing",
-      "Email support",
+     
+      
     ],
     cta: "Get Pro Monthly",
     highlight: false,
   },
   {
     name: "Pro 6-Month",
-    price: "₹1,499",
+    price: "Rs.7500",
     period: "/ 6 months",
     badge: "Best Value",
     desc: "Save 17% vs monthly",
@@ -55,7 +54,6 @@ export const plans = [
       "Everything in Pro Monthly",
       "Early access to new features",
       "Resume review by AI weekly",
-      "LinkedIn profile tips",
       "Dedicated support",
     ],
     cta: "Get Best Value",
@@ -71,10 +69,9 @@ export const Features = [
   title: "AI Resume Analyser",
   desc: "Upload your resume and get an instant ATS compatibility score. Our AI pinpoints strengths, weaknesses, missing keywords, and formatting issues so you can fix them before recruiters even see it.",
   bullets: [
-    "ATS score out of 100",
-    "Strengths & weaknesses breakdown",
-    "Keyword gap analysis",
-    "Section-by-section feedback",
+   "Basic resume scoring",
+    "Simple feedback",
+    "Skill & keyword check",
   ],
 },
   {
@@ -84,10 +81,9 @@ export const Features = [
     title: "Smart Job Matcher",
     desc: "After analysing your resume, CareerAI matches you with roles that actually fit your skills and experience — no more applying blindly and wondering why you hear nothing back.",
     bullets: [
-      "Personalised job recommendations",
-      "Match % per role",
-      "Skill gap for each job",
-      "One-click apply guidance",
+    "Basic role suggestions",
+    "Skill-based filtering",
+    "Future enhancement feature",
     ],
   },
   {
@@ -98,7 +94,6 @@ export const Features = [
     desc: "Answer a few questions about your experience and goals. Our AI crafts a recruiter-ready, ATS-optimised resume tailored to the roles you're targeting.",
     bullets: [
       "Auto-generated content",
-      "Industry-specific templates",
       "ATS-friendly formatting",
       "Export as PDF instantly",
     ],
@@ -111,9 +106,9 @@ export const Features = [
     desc: "Get personalised interview questions based on your skills or resume. Practice with AI feedback, sharpen your answers, and walk into every interview with confidence.",
     bullets: [
       "Resume-based question sets",
-      "Skill-specific practice",
+      "General interview questions",
       "AI answer feedback",
-      "Behavioural & technical rounds",
+      
     ],
   },
 ];

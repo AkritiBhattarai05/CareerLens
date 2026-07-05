@@ -46,7 +46,7 @@ function Features(){
                 >
                   <CheckCircle2
                     size={14}
-                    className="text-emerald-400 shrink-0"
+                    className="text-yellow-600 shrink-0"
                   />
                   {b}
                 </li>

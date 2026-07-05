@@ -45,10 +45,11 @@ const Login = () => {
       <div className="orb w-64 h-64 bg-violet-600 top-1/2 left-1/2 -translate-x-1/2" />
 
       <div className="w-full max-w-md p-10 flex flex-col items-center gap-8 z-10
-bg-[linear-gradient(135deg,rgba(125,162,234,0.25),rgba(245,237,228,0.10))]
-backdrop-blur-2xl border border-white/10 rounded-2xl
-shadow-[0_30px_80px_rgba(0,0,0,0.35)]
-transition-all duration-300 hover:translate-y-[-4px]">
+      bg-[linear-gradient(135deg,rgba(125,162,234,0.25),rgba(245,237,228,0.10))]
+      backdrop-blur-2xl border border-white/10 rounded-2xl
+      shadow-[0_30px_80px_rgba(0,0,0,0.35)]
+      transition-all duration-300 hover:translate-y-[-4px]">
+
         <div className="flex flex-col items-center gap-3 text-center">
           <div className="w-12 h-12 rounded-xl bg-linear-to-br from-indigo-500 to-emerald-400 flex items-center justify-center shadow-lg shadow-indigo-500/30 text-3xl">
             📚

@@ -15,7 +15,7 @@ function Hero(){
         style={{ opacity: 0.1 }}
       />
    <div className="inline-flex items-center gap-2 feature-pill mb-6 animate-fade-in">
-        <Zap size={11} className="text-emerald-400" />
+        <Zap size={11} className="text-yellow-600" />
         <span className="text-orange-300">AI-Powered Career Platform</span>
       </div>
  
@@ -133,11 +133,11 @@ function Hero(){
 
   {/* Insights */}
   <div className="flex flex-col gap-2 text-left">
-    <span className="text-xs font-medium text-emerald-300">
+    <span className="text-xs font-medium text-orange-400">
       ✔ Strong keywords detected
     </span>
-    <span className="text-xs font-medium text-orange-300">
-      📈 Top 20% resume
+    <span className="text-xs font-medium text-yellow-500">
+      📈 Interview prep
     </span>
     <span className="text-xs text-white/40 font-medium">
       3 job matches found
