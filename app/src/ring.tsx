@@ -1,16 +1,27 @@
 export function ScoreRing({ score }: { score: number }) {
-  const r = 40,
-    c = 2 * Math.PI * r;
+  const r = 40;
+  const c = 2 * Math.PI * r;
+
   return (
-    <svg width="100" height="100" viewBox="0 0 100 100" className="-rotate-90">
+    <svg width="100" height="100" viewBox="0 0 100 100">
+      <defs>
+        <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#F97316" />   {/* Orange */}
+          <stop offset="100%" stopColor="#FACC15" /> {/* Yellow */}
+        </linearGradient>
+      </defs>
+
+      {/* Background circle */}
       <circle
         cx="50"
         cy="50"
         r={r}
         fill="none"
-        stroke="rgba(255,255,255,0.06)"
+        stroke="#2d2d2d"
         strokeWidth="8"
       />
+
+      {/* Progress circle */}
       <circle
         cx="50"
         cy="50"
@@ -21,14 +32,9 @@ export function ScoreRing({ score }: { score: number }) {
         strokeLinecap="round"
         strokeDasharray={c}
         strokeDashoffset={c - (score / 100) * c}
+        transform="rotate(-90 50 50)"
         className="transition-all duration-700"
       />
-      <defs>
-        <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#6366f1" />
-          <stop offset="100%" stopColor="#34d399" />
-        </linearGradient>
-      </defs>
     </svg>
   );
 }

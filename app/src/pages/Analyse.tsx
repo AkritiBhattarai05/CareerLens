@@ -167,7 +167,7 @@ const AnalysePage = () => {
                   >
                     <CheckCircle2
                       size={14}
-                      className="text-emerald-400 shrink-0 mt-0.5"
+                      className="text-orange-300 shrink-0 mt-0.5"
                     />{" "}
                     {s}
                   </div>
