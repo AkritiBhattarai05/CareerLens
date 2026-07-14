@@ -39,7 +39,7 @@ function PlanCTA({
   plan: (typeof plans)[0];
   highlight: boolean
 }){
- const {isAuth, user, setUser} = useAppData()
+const {isAuth, user, setUser} = useAppData()
 const isPro = isAuth && user?.subscription &&  new Date() < new Date(user.subscription);
 
 if(isAuth){
@@ -78,13 +78,6 @@ return (
     </button>
   )
 }
-
-
-
-
-
-
-
 
 const Pricing = () => {
   return <section id="pricing" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
@@ -159,9 +152,6 @@ const Pricing = () => {
               ))}
             </ul>
  <PlanCTA plan={plan} highlight={plan.highlight} />
-
-
-
 </div>
 ))}
  </div>

@@ -9,6 +9,7 @@ import { useAppData } from "./context/AppContext";
 import Loading from "./components/loading";
 import PublicRoutes from "./components/PublicRoutes";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import AnalysePage from "./pages/Analyse";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
      
     <Route element={<ProtectedRoutes/>}>
      <Route path="/account" element={<Account />} />
+     <Route path="/analyse" element={<AnalysePage />} />
      </Route>
    
       
