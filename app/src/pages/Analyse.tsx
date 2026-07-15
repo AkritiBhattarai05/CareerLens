@@ -70,7 +70,7 @@ const AnalysePage = () => {
           className="glass-card border-dashed border-white/15 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer hover:border-indigo-500/40 hover:bg-white/2 transition-all duration-300 group"
         >
           <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border-dashed border-indigo-500/20 flex items-center justify-center group-hover:scale-105 transition-transform">
-            <Upload size={32} className="text-orange-400" />
+            <Upload size={32} className="text-yellow-500" />
           </div>
           <div className="text-center">
             <p className="font-semibold text-white/80">
@@ -81,7 +81,7 @@ const AnalysePage = () => {
             </p>
           </div>
           {error && (
-            <p className="text-red-400 text-sm flex items-center gap-1.5">
+            <p className="text-red-500 text-sm flex items-center gap-1.5">
               <AlertCircle size={14} /> {error}
             </p>
           )}
@@ -101,7 +101,7 @@ const AnalysePage = () => {
 
         {loading && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Loader2 size={36} className="text-orange-600 animate-spin" />
+            <Loader2 size={36} className="text-yellow-600 animate-spin" />
             <p className="text-white/40 text-sm">Analysing your resume...</p>
           </div>
         )}
