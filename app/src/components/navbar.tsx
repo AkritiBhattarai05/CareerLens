@@ -94,7 +94,7 @@ md:px-12 py-4 bg-[#18245a]/98 backdrop-blur-xl border-b border-white/10">
             className="hover:text-white transition-colors"
           >
             InterviewPrep
-          </Link>
+          </Link> 
 
           {isAuth ? (
             <Link

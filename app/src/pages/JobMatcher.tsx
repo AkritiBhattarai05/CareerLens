@@ -94,7 +94,7 @@ const JobMatcherPage = () => {
           {(["manual", "resume"] as const).map((m) => (
             <button
               key={m}
-              onClick={() => {
+              onClick={() => { 
                 setMode(m);
                 setResult(null);
                 setError("");

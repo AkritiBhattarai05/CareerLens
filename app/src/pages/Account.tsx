@@ -74,7 +74,7 @@ const Account = () => {
               to={"/#pricing"}
               className="btn-primary text-xs font-semibold px-4 py-2 rounded-lg whitespace-nowrap"
             >
-              Upgrade
+              Upgrade Plan
             </HashLink>
           )}
        </div>
