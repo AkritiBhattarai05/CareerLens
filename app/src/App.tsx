@@ -11,6 +11,7 @@ import PublicRoutes from "./components/PublicRoutes";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import AnalysePage from "./pages/Analyse";
 import JobMatcherPage from "./pages/JobMatcher";
+import FAQ from "./pages/FAQ";
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
      <Route path="/account" element={<Account />} />
      <Route path="/analyse" element={<AnalysePage />} />
     <Route path="/jobmatcher" element={<JobMatcherPage />} />
+    <Route path="/faq" element={<FAQ />} />
      </Route>
    
       
