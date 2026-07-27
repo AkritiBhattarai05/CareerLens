@@ -27,6 +27,7 @@ const AnalysePage = () => {
 
   const fileRef = useRef<HTMLInputElement>(null);
 
+  //pdf chaahi matra lincha and size under 5mb
   async function handleFile(file: File) {
     if (file.type !== "application/pdf")
       return setError("Please upload a pdf file.");
@@ -37,7 +38,7 @@ const AnalysePage = () => {
     setLoading(true);
     setResult(null);
     try {
-      const pdfBase64 = await toBase64(file);
+      const pdfBase64 = await toBase64(file);//json api cant directly transmit binary file so converted to base64
       const { data } = await axios.post(
         `${server}/api/ai/analyse`,
         { pdfBase64 },
