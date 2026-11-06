@@ -13,6 +13,7 @@ import AnalysePage from "./pages/Analyse";
 import JobMatcherPage from "./pages/JobMatcher";
 import FAQ from "./pages/FAQ";
 import InterviewPrep from "./pages/Interview";
+import BuildResumePage from "./pages/BuildResume";
 
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
      <Route path="/analyse" element={<AnalysePage />} />
     <Route path="/jobmatcher" element={<JobMatcherPage />} />
     <Route path="/interviewprep" element={<InterviewPrep />} />
+    <Route path="/resumebuilder" element={<BuildResumePage />} />
     <Route path="/faq" element={<FAQ />} />
      </Route>
    
