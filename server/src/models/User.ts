@@ -1,47 +1,57 @@
-import mongoose, {Document,Schema} from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
-export interface IUser extends Document{
+export interface IUser extends Document {
     name: string;
     email: string;
     image: string;
-    subscription:Date | null;
-    freeRequestsUsed:number;
+    subscription: Date | null;
+    subscriptionDuration: 1 | 6 | null;
+    freeRequestsUsed: number;
 
     hasProAccess(): boolean;
     canMakeRequest(): boolean;
 }
 
-const schema: Schema <IUser> = new Schema({
-    name:{
-        type:String,
-        required:true,
-    },
-    email:{
-        type:String,
-        required:true,
-        unique: true,
-    },
-    image:{
-        type:String,
-        required:true,
-    },
+const schema: Schema<IUser> = new Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        image: {
+            type: String,
+            required: true,
+        },
 
-    subscription:{
-        type:Date,
-        default:null,
-    },
+        subscription: {
+            type: Date,
+            default: null,
+        },
 
-    freeRequestsUsed: {type: Number, default :0},
-},{timestamps: true}
+        subscriptionDuration: {
+            type: Number,
+            enum: [1, 6],
+            default: null,
+        },
+
+        freeRequestsUsed: { type: Number, default: 0 },
+    },
+    { timestamps: true }
 );
 
-schema.methods.hasProAccess = function():boolean{
+schema.methods.hasProAccess = function (): boolean {
     return !!this.subscription && new Date() < new Date(this.subscription);
-
 };
-schema.methods.canMakeRequest = function():boolean{
+
+schema.methods.canMakeRequest = function (): boolean {
     return this.hasProAccess() || this.freeRequestsUsed < 3;
 };
+
 const User = mongoose.model<IUser>("User", schema);
 
-export default User; 
+export default User;

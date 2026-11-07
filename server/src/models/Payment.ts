@@ -1,42 +1,14 @@
+import mongoose, { Schema } from "mongoose";
 
-import mongoose from "mongoose";
-
-const paymentSchema = new mongoose.Schema(
+const paymentSchema = new Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-
-    transactionUuid: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-
-    duration: {
-      type: Number,
-      required: true,
-    },
-
-    amount: {
-      type: Number,
-      required: true,
-    },
-
-    status: {
-      type: String,
-      enum: ["PENDING", "COMPLETE", "FAILED"],
-      default: "PENDING",
-    },
-
-    referenceId: {
-      type: String,
-      default: null,
-    },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    transaction_uuid: { type: String, required: true, unique: true },
+    amount: { type: Number, required: true },
+    duration: { type: Number, required: true },
+    status: { type: String, default: "PENDING" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model("Payment", paymentSchema);

@@ -4,6 +4,7 @@ export interface User {
   email: string;
   image: string;
   subscription: Date | null;
+   subscriptionDuration?: 1 | 6 | null;
   freeRequestsUsed: number;
 }
 
