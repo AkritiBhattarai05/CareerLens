@@ -1,13 +1,6 @@
 import { useRef, useState } from "react";
 import type { Analysis } from "../types";
-import {
-  downloadReport,
-  prioBg,
-  prioColor,
-  scoreBar,
-  scoreColor,
-  toBase64,
-} from "../utils";
+import { downloadReport, toBase64 } from "../utils";
 import axios from "axios";
 import { server } from "../main";
 import {
@@ -19,6 +12,30 @@ import {
   Upload,
 } from "lucide-react";
 import { ScoreRing } from "../ring";
+
+// Readable score colors on a light background
+const scoreText = (score: number) =>
+  score >= 75
+    ? "text-emerald-700"
+    : score >= 50
+    ? "text-amber-700"
+    : "text-red-700";
+
+const scoreBarColor = (score: number) =>
+  score >= 75 ? "bg-emerald-600" : score >= 50 ? "bg-amber-500" : "bg-red-600";
+
+// Suggestion card colors by priority (falls back to the "low" style)
+const prioCard: Record<string, string> = {
+  high: "bg-red-50 border-red-200",
+  medium: "bg-amber-50 border-amber-200",
+  low: "bg-sky-50 border-sky-200",
+};
+
+const prioLabel: Record<string, string> = {
+  high: "text-red-700",
+  medium: "text-amber-700",
+  low: "text-sky-700",
+};
 
 const AnalysePage = () => {
   const [result, setResult] = useState<Analysis | null>(null);
@@ -64,25 +81,26 @@ const AnalysePage = () => {
   return (
     <div className="bg-page min-h-screen pt-20 px-4 md:px-8 pb-12">
       <div className="max-w-3xl mx-auto flex flex-col gap-4">
+        {/* Upload box */}
         <div
           onDrop={onDrop}
           onDragOver={(e) => e.preventDefault()}
           onClick={() => fileRef.current?.click()}
-          className="glass-card border-dashed border-white/15 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer hover:border-indigo-500/40 hover:bg-white/2 transition-all duration-300 group"
+          className="glass-card border-dashed border-[#16587B]/40 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer hover:border-[#16587B] hover:bg-white transition-all duration-300 group"
         >
-          <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border-dashed border-indigo-500/20 flex items-center justify-center group-hover:scale-105 transition-transform">
-            <Upload size={32} className="text-yellow-500" />
+          <div className="w-14 h-14 rounded-2xl bg-[#84B3CE]/40 border border-dashed border-[#16587B]/30 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <Upload size={32} className="text-[#0F2A3A]" />
           </div>
           <div className="text-center">
-            <p className="font-semibold text-white/80">
+            <p className="font-semibold text-[#0F2A3A]">
               {result ? "Analyse another resume" : "Drop your resume here"}
             </p>
-            <p className="text-white/35 text-sm mt-0.5">
+            <p className="text-[#3F5B6B] text-sm mt-0.5">
               or click to browse • PDF only • max 5MB
             </p>
           </div>
           {error && (
-            <p className="text-red-500 text-sm flex items-center gap-1.5">
+            <p className="text-red-700 text-sm flex items-center gap-1.5">
               <AlertCircle size={14} /> {error}
             </p>
           )}
@@ -102,120 +120,127 @@ const AnalysePage = () => {
 
         {loading && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Loader2 size={36} className="text-yellow-600 animate-spin" />
-            <p className="text-white/40 text-sm">Analysing your resume...</p>
+            <Loader2 size={36} className="text-[#16587B] animate-spin" />
+            <p className="text-[#3F5B6B] text-sm">Analysing your resume...</p>
           </div>
         )}
 
         {result && !loading && (
           <>
+            {/* Overall score */}
             <div className="glass-card p-6 flex items-center gap-6 flex-wrap">
               <div className="relative flex items-center justify-center">
                 <ScoreRing score={result.atsScore} />
                 <div className="absolute flex flex-col items-center">
                   <span
-                    className={`text-2xl font-black ${scoreColor(
+                    className={`text-2xl font-black ${scoreText(
                       result.atsScore
                     )}`}
                   >
                     {result.atsScore}
                   </span>
-                  <span className="text-[10px] text-white/30">ATS</span>
+                  <span className="text-[10px] text-[#3F5B6B]">ATS</span>
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold mb-1">Overall Score</p>
-                <p className="text-white/45 text-sm leading-relaxed">
+                <p className="font-semibold mb-1 text-[#0F2A3A]">
+                  Overall Score
+                </p>
+                <p className="text-[#3F5B6B] text-sm leading-relaxed">
                   {result.summary}
                 </p>
               </div>
+            </div>
 
-              <div className="glass-card p-6 flex flex-col gap-4">
-                <p className="text-xs text-white/30 uppercase tracking-widest">
-                  Score Breakdown
-                </p>
-                {Object.entries(result.scoreBreakdown).map(([key, val]) => (
-                  <div className="flex flex-col gap-1.5" key={key}>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-white/60 capitalize">{key}</span>
-                      <span
-                        className={`font-semibold ${scoreColor(val.score)}`}
-                      >
-                        {val.score}
-                      </span>
-                    </div>
-                    <div className="h-1.5 bg-white/8 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full bg-linear-to-r ${scoreBar(
-                          val.score
-                        )} rounded-full transition-all duration-700`}
-                        style={{ width: `${val.score}%` }}
-                      />
-                    </div>
-                    <p className="text-xs text-white/35">{val.feedback}</p>
+            {/* Score breakdown */}
+            <div className="glass-card p-6 flex flex-col gap-4">
+              <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
+                Score Breakdown
+              </p>
+              {Object.entries(result.scoreBreakdown).map(([key, val]) => (
+                <div className="flex flex-col gap-1.5" key={key}>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#0F2A3A] capitalize">{key}</span>
+                    <span className={`font-semibold ${scoreText(val.score)}`}>
+                      {val.score}
+                    </span>
                   </div>
-                ))}
-              </div>
-
-              <div className="glass-card p-6 flex flex-col gap-3">
-                <p className="text-xs text-white/30 uppercase tracking-widest">
-                  Strenths
-                </p>
-                {result.strengths.map((s, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-2 text-sm text-white/60"
-                  >
-                    <CheckCircle2
-                      size={14}
-                      className="text-gradient shrink-0 mt-0.5"
-                    />{" "}
-                    {s}
+                  <div className="h-1.5 bg-[#E3D9BF] rounded-full overflow-hidden">
+                    <div
+                      className={`h-full ${scoreBarColor(
+                        val.score
+                      )} rounded-full transition-all duration-700`}
+                      style={{ width: `${val.score}%` }}
+                    />
                   </div>
-                ))}
-              </div>
+                  <p className="text-xs text-[#3F5B6B]">{val.feedback}</p>
+                </div>
+              ))}
+            </div>
 
-              <div className="glass-card p-6 flex flex-col gap-4">
-                <p className="text-xs text-white/30 uppercase tracking-widest">
-                  Suggestions
-                </p>
-                {result.suggestions.map((s, i) => (
+            {/* Strengths */}
+            <div className="glass-card p-6 flex flex-col gap-3">
+              <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
+                Strengths
+              </p>
+              {result.strengths.map((s, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-2 text-sm text-[#0F2A3A]"
+                >
+                  <CheckCircle2
+                    size={14}
+                    className="text-[#16587B] shrink-0 mt-0.5"
+                  />{" "}
+                  {s}
+                </div>
+              ))}
+            </div>
+
+            {/* Suggestions */}
+            <div className="glass-card p-6 flex flex-col gap-4">
+              <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
+                Suggestions
+              </p>
+              {result.suggestions.map((s, i) => {
+                const p = String(s.priority).toLowerCase();
+                return (
                   <div
                     key={i}
                     className={`p-4 rounded-xl border flex flex-col gap-2 ${
-                      prioBg[s.priority]
+                      prioCard[p] || prioCard.low
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <span className="text-sm font-semibold text-white/80">
+                      <span className="text-sm font-semibold text-[#0F2A3A]">
                         {s.category}
                       </span>
                       <span
                         className={`text-[11px] font-bold uppercase tracking-widest ${
-                          prioColor[s.priority]
+                          prioLabel[p] || prioLabel.low
                         }`}
                       >
                         {s.priority}
                       </span>
                     </div>
-                    <p className="text-sm text-white/50">{s.issue}</p>
-                    <div className="flex items-start gap-2 text-sm text-white/70">
+                    <p className="text-sm text-[#3F5B6B]">{s.issue}</p>
+                    <div className="flex items-start gap-2 text-sm text-[#0F2A3A]">
                       <ChevronRight
                         size={14}
-                        className="shrink-0 mt-0.5 text-indigo-400"
+                        className="shrink-0 mt-0.5 text-[#16587B]"
                       />
                       {s.recommendation}
                     </div>
                   </div>
-                ))}
+                );
+              })}
 
-                <button
-                  onClick={() => downloadReport(result)}
-                  className="btn-primary flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold"
-                >
-                  <Download size={16} /> Download Report
-                </button>
-              </div>
+              <button
+                onClick={() => downloadReport(result)}
+                className="btn-primary flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold"
+              >
+                <Download size={16} /> Download Report
+              </button>
             </div>
           </>
         )}

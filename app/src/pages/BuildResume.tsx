@@ -35,7 +35,7 @@ const blankProj = (): Project => ({ name: "", description: "", link: "" });
 
 const Field = ({ label, value, onChange, placeholder, textarea }: any) => (
   <div className="flex flex-col gap-1.5">
-    <label className="text-xs text-white/30 uppercase tracking-widest">
+    <label className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
       {label}
     </label>
     {textarea ? (
@@ -44,14 +44,14 @@ const Field = ({ label, value, onChange, placeholder, textarea }: any) => (
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={3}
-        className="input-field resize-node"
+        className="input-field resize-none"
       />
     ) : (
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="input-field resize-node"
+        className="input-field"
       />
     )}
   </div>
@@ -69,13 +69,15 @@ function Section({
     <div className="glass-card overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/2 transition-colors"
+        className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white transition-colors"
       >
-        <span className="text-sm font-semibold text-white/80">{title}</span>
+        <span className="text-sm font-semibold text-[#0F2A3A] capitalize">
+          {title}
+        </span>
         {open ? (
-          <ChevronUp size={16} className="text-white/30" />
+          <ChevronUp size={16} className="text-[#3F5B6B]" />
         ) : (
-          <ChevronDown size={16} className="text-white/30" />
+          <ChevronDown size={16} className="text-[#3F5B6B]" />
         )}
       </button>
       {open && <div className="px-6 pb-6 flex flex-col gap-4">{children}</div>}
@@ -190,6 +192,7 @@ const BuildResumePage = () => {
   return (
     <div className="bg-page min-h-screen pt-20 px-4 md:px-8 pb-12">
       <div className="max-w-3xl mx-auto flex flex-col gap-6">
+        {/* Mode switch */}
         <div className="glass-card p-1.5 flex gap-1.5">
           {(["manual", "improve"] as const).map((m) => (
             <button
@@ -200,7 +203,9 @@ const BuildResumePage = () => {
                 setError("");
               }}
               className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 capitalize ${
-                mode === m ? "btn-primary" : "text-white/40 hover:text-white/70"
+                mode === m
+                  ? "btn-primary"
+                  : "text-[#3F5B6B] hover:text-[#0F2A3A]"
               }`}
             >
               {m === "manual"
@@ -255,7 +260,7 @@ const BuildResumePage = () => {
                   placeholder="linkedin.com/in/msd"
                 />
                 <Field
-                  label="Professinal Summary (AI will enhance it)"
+                  label="Professional Summary (AI will enhance it)"
                   value={summary}
                   onChange={setSummary}
                   placeholder="Brief summary of your experience and goals..."
@@ -268,10 +273,10 @@ const BuildResumePage = () => {
               {experience.map((exp, ei) => (
                 <div
                   key={ei}
-                  className="flex flex-col gap-3 p-4 bg-white/3 rounded-xl border border-white/6"
+                  className="flex flex-col gap-3 p-4 bg-white rounded-xl border border-[#E3D9BF]"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs text-white/30 uppercase tracking-widest">
+                    <span className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
                       Position {ei + 1}
                     </span>
                     {experience.length > 1 && (
@@ -279,7 +284,8 @@ const BuildResumePage = () => {
                         onClick={() =>
                           setExp((p) => p.filter((_, i) => i !== ei))
                         }
-                        className="text-red-400/60 hover:text-red-400 transition-colors"
+                        aria-label="Remove position"
+                        className="text-red-600/70 hover:text-red-700 transition-colors"
                       >
                         <Trash size={14} />
                       </button>
@@ -318,8 +324,8 @@ const BuildResumePage = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs text-white/30 uppercase tracking-widest">
-                      Key Achivements / Responsiblities
+                    <label className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
+                      Key Achievements / Responsibilities
                     </label>
                     {exp.bullets.map((b, bi) => (
                       <div key={bi} className="flex gap-2">
@@ -340,7 +346,8 @@ const BuildResumePage = () => {
                                 exp.bullets.filter((_, j) => j !== bi)
                               )
                             }
-                            className="text-red-400/50 hover:text-red-400 transition-colors"
+                            aria-label="Remove bullet"
+                            className="text-red-600/70 hover:text-red-700 transition-colors"
                           >
                             <Trash size={13} />
                           </button>
@@ -351,7 +358,7 @@ const BuildResumePage = () => {
                       onClick={() =>
                         updateExp(ei, "bullets", [...exp.bullets, ""])
                       }
-                      className="feature-pill self-start gap-1.5 cursor-pointer hover:border-white/15 transition-colors"
+                      className="feature-pill self-start gap-1.5 cursor-pointer hover:border-[#16587B] transition-colors"
                     >
                       <Plus size={10} /> Add Bullet
                     </button>
@@ -361,7 +368,7 @@ const BuildResumePage = () => {
 
               <button
                 onClick={() => setExp((p) => [...p, blankExp()])}
-                className="feature-pill self-start gap-1.5 cursor-pointer hover:border-white/15 transition-colors"
+                className="feature-pill self-start gap-1.5 cursor-pointer hover:border-[#16587B] transition-colors"
               >
                 <Plus size={10} /> Add Experience
               </button>
@@ -371,10 +378,10 @@ const BuildResumePage = () => {
               {education.map((edu, ei) => (
                 <div
                   key={ei}
-                  className="flex flex-col gap-3 p-4 bg-white/3 rounded-xl border border-white/6"
+                  className="flex flex-col gap-3 p-4 bg-white rounded-xl border border-[#E3D9BF]"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs text-white/30 uppercase tracking-widest">
+                    <span className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
                       Education {ei + 1}
                     </span>
                     {education.length > 1 && (
@@ -382,7 +389,8 @@ const BuildResumePage = () => {
                         onClick={() =>
                           setEdu((p) => p.filter((_, i) => i !== ei))
                         }
-                        className="text-red-400/60 hover:text-red-400 transition-colors"
+                        aria-label="Remove education"
+                        className="text-red-600/70 hover:text-red-700 transition-colors"
                       >
                         <Trash size={14} />
                       </button>
@@ -448,7 +456,7 @@ const BuildResumePage = () => {
 
               <button
                 onClick={() => setEdu((p) => [...p, blankEdu()])}
-                className="feature-pill self-start gap-1.5 cursor-pointer hover:border-white/15 transition-colors"
+                className="feature-pill self-start gap-1.5 cursor-pointer hover:border-[#16587B] transition-colors"
               >
                 <Plus size={10} /> Add Education
               </button>
@@ -456,13 +464,13 @@ const BuildResumePage = () => {
 
             <Section title="skills">
               <Field
-                label="Technical Skills (camma separated)"
+                label="Technical Skills (comma separated)"
                 value={techSkills}
                 onChange={setTech}
                 placeholder="React, Node.js ...."
               />
               <Field
-                label="Soft Skills (camma separated)"
+                label="Soft Skills (comma separated)"
                 value={softSkills}
                 onChange={setSoft}
                 placeholder="Leadership, problem solving ...."
@@ -473,10 +481,10 @@ const BuildResumePage = () => {
               {projects.map((proj, pi) => (
                 <div
                   key={pi}
-                  className="flex flex-col gap-3 p-4 bg-white/3 rounded-xl border border-white/6"
+                  className="flex flex-col gap-3 p-4 bg-white rounded-xl border border-[#E3D9BF]"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs text-white/30 uppercase tracking-widest">
+                    <span className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
                       Project {pi + 1}
                     </span>
                     {projects.length > 1 && (
@@ -484,7 +492,8 @@ const BuildResumePage = () => {
                         onClick={() =>
                           setProjects((p) => p.filter((_, i) => i !== pi))
                         }
-                        className="text-red-400/60 hover:text-red-400 transition-colors"
+                        aria-label="Remove project"
+                        className="text-red-600/70 hover:text-red-700 transition-colors"
                       >
                         <Trash size={14} />
                       </button>
@@ -530,14 +539,19 @@ const BuildResumePage = () => {
 
               <button
                 onClick={() => setProjects((p) => [...p, blankProj()])}
-                className="feature-pill self-start gap-1.5 cursor-pointer hover:border-white/15 transition-colors"
+                className="feature-pill self-start gap-1.5 cursor-pointer hover:border-[#16587B] transition-colors"
               >
                 <Plus size={10} /> Add Project
               </button>
             </Section>
 
             <Section title="Certifications (Optional)">
-              <Field label="Certifications (comma seperated)" value={certs} onChange={setCerts} placeholder="AWS Developer, Google Analytics...."/>
+              <Field
+                label="Certifications (comma separated)"
+                value={certs}
+                onChange={setCerts}
+                placeholder="AWS Developer, Google Analytics...."
+              />
             </Section>
           </>
         )}
@@ -552,20 +566,20 @@ const BuildResumePage = () => {
                 if (f) handleFileChange(f);
               }}
               onClick={() => fileRef.current?.click()}
-              className="glass-card border-dashed border-white/15 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer hover:border-indigo-500/40 hover:bg-white/2 transition-all duration-300 group"
+              className="glass-card border-dashed border-[#16587B]/40 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer hover:border-[#16587B] hover:bg-white transition-all duration-300 group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border-dashed border-indigo-500/20 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-[#84B3CE]/40 border border-dashed border-[#16587B]/30 flex items-center justify-center group-hover:scale-105 transition-transform">
                 {file ? (
-                  <FileText size={22} className="text-emerald-400" />
+                  <FileText size={22} className="text-[#0F2A3A]" />
                 ) : (
-                  <Upload size={32} className="text-indigo-400" />
+                  <Upload size={32} className="text-[#0F2A3A]" />
                 )}
               </div>
               <div className="text-center">
-                <p className="font-semibold text-white/80">
+                <p className="font-semibold text-[#0F2A3A]">
                   {file ? file.name : "Drop your resume here"}
                 </p>
-                <p className="text-white/35 text-sm mt-0.5">
+                <p className="text-[#3F5B6B] text-sm mt-0.5">
                   or click to browse • PDF only • max 5MB
                 </p>
               </div>
@@ -585,7 +599,7 @@ const BuildResumePage = () => {
         )}
 
         {error && (
-          <p className="text-red-400 text-sm flex items-center gap-1.5">
+          <p className="text-red-700 text-sm flex items-center gap-1.5">
             <AlertCircle size={14} /> {error}
           </p>
         )}
@@ -602,8 +616,8 @@ const BuildResumePage = () => {
 
         {loading && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Loader2 size={36} className="text-indigo-400 animate-spin" />
-            <p className="text-white/40 text-sm">
+            <Loader2 size={36} className="text-[#16587B] animate-spin" />
+            <p className="text-[#3F5B6B] text-sm">
               Building your ATS optimized resume...
             </p>
           </div>
@@ -612,9 +626,11 @@ const BuildResumePage = () => {
         {result && !loading && (
           <div className="flex flex-col gap-4">
             <div className="glass-card p-8 flex flex-col gap-5 font-mono text-sm">
-              <div className="border-b border-white/8 pb-5">
-                <h2 className="text-2xl font-bold text-white">{result.name}</h2>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-white/40 text-xs">
+              <div className="border-b border-[#E3D9BF] pb-5">
+                <h2 className="text-2xl font-bold text-[#0F2A3A]">
+                  {result.name}
+                </h2>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-[#3F5B6B] text-xs">
                   {[
                     result.email,
                     result.phone,
@@ -629,26 +645,26 @@ const BuildResumePage = () => {
               </div>
               {result.summary && (
                 <div>
-                  <p className="text-xs text-white/30 uppercase\ tracking-widest mb-2">
+                  <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold mb-2">
                     Summary
                   </p>
-                  <p className="text-white/60 text-sm leading-relaxed">
+                  <p className="text-[#0F2A3A] text-sm leading-relaxed">
                     {result.summary}
                   </p>
                 </div>
               )}
               {result.experience?.length > 0 && (
                 <div>
-                  <p className="text-xs text-white/30 uppercase\ tracking-widest mb-3">
+                  <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold mb-3">
                     Experience
                   </p>
                   {result.experience.map((e, i) => (
                     <div className="mb-4" key={i}>
                       <div className="flex justify-between flex-wrap gap-1">
-                        <span className="font-semibold text-white/80">
+                        <span className="font-semibold text-[#0F2A3A]">
                           {e.title} • {e.company}
                         </span>
-                        <span className="text-white/35 text-xs">
+                        <span className="text-[#3F5B6B] text-xs">
                           {e.startDate} • {e.endDate}
                         </span>
                       </div>
@@ -656,7 +672,7 @@ const BuildResumePage = () => {
                         {e.bullets.filter(Boolean).map((b, j) => (
                           <li
                             key={j}
-                            className="text-white/50 text-xs before:content-[-] before:mr-2"
+                            className="text-[#0F2A3A] text-xs before:content-['-'] before:mr-2"
                           >
                             {b}
                           </li>
@@ -668,7 +684,7 @@ const BuildResumePage = () => {
               )}
               {result.education?.length > 0 && (
                 <div>
-                  <p className="text-xs text-white/30 uppercase tracking-widest mb-3">
+                  <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold mb-3">
                     Education
                   </p>
                   {result.education.map((e, i) => (
@@ -676,10 +692,10 @@ const BuildResumePage = () => {
                       key={i}
                       className="flex justify-between flex-wrap gap-1 mb-2"
                     >
-                      <span className=" text-white/70 font-medium">
+                      <span className="text-[#0F2A3A] font-medium">
                         {e.degree} • {e.school}
                       </span>
-                      <span className="text-white/35 text-xs">
+                      <span className="text-[#3F5B6B] text-xs">
                         {e.year} {e.gpa ? ` • GPA ${e.gpa}` : ""}
                       </span>
                     </div>
@@ -689,20 +705,20 @@ const BuildResumePage = () => {
               {(result.skills?.technical?.length > 0 ||
                 result.skills?.soft?.length > 0) && (
                 <div>
-                  <p className="text-xs text-white/30 uppercase tracking-widest mb-3">
+                  <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold mb-3">
                     Skills
                   </p>
                   {result.skills.technical?.length > 0 && (
-                    <p className="text-white/55 text-xs mb-1">
-                      <span className="text-white/40 font-semibold">
+                    <p className="text-[#0F2A3A] text-xs mb-1">
+                      <span className="text-[#3F5B6B] font-semibold">
                         Technical:{" "}
                       </span>
                       {result.skills.technical.join(", ")}
                     </p>
                   )}
                   {result.skills.soft?.length > 0 && (
-                    <p className="text-white/55 text-xs mb-1">
-                      <span className="text-white/40 font-semibold">
+                    <p className="text-[#0F2A3A] text-xs mb-1">
+                      <span className="text-[#3F5B6B] font-semibold">
                         Soft:{" "}
                       </span>
                       {result.skills.soft.join(", ")}
@@ -713,22 +729,22 @@ const BuildResumePage = () => {
 
               {result.projects?.length > 0 && (
                 <div>
-                  <p className="text-xs text-white/30 uppercase tracking-widest mb-3">
+                  <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold mb-3">
                     Projects
                   </p>
                   {result.projects.map((p, i) => (
                     <div key={i} className="mb-3">
-                      <p className="text-white/70 font-semibold">
+                      <p className="text-[#0F2A3A] font-semibold">
                         {p.name}
                         {p.link ? (
-                          <span className="text-indigo-400 ml-2 text-xs font-normal">
+                          <span className="text-[#16587B] ml-2 text-xs font-normal">
                             {p.link}
                           </span>
                         ) : (
                           ""
                         )}
                       </p>
-                      <p className="text-white/45 text-xs mt-1">
+                      <p className="text-[#3F5B6B] text-xs mt-1">
                         {p.description}
                       </p>
                     </div>
@@ -738,7 +754,7 @@ const BuildResumePage = () => {
 
               {result.certifications?.length > 0 && (
                 <div>
-                  <p className="text-xs text-white/30 uppercase tracking-widest mb-3">
+                  <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold mb-3">
                     Certifications
                   </p>
                   <div className="flex flex-wrap gap-2">

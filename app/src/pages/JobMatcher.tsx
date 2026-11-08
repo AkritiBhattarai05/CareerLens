@@ -1,7 +1,6 @@
-
 import { useRef, useState } from "react";
 import type { Job } from "../types";
-import { matchBg, matchColor, toBase64 } from "../utils";
+import { toBase64 } from "../utils";
 import axios from "axios";
 import { server } from "../main";
 import {
@@ -19,6 +18,21 @@ interface Result {
   jobs: Job[];
   summary: string;
 }
+
+// Readable match colors on a light background
+const matchText = (score: number) =>
+  score >= 75
+    ? "text-emerald-700"
+    : score >= 50
+    ? "text-amber-700"
+    : "text-red-700";
+
+const matchBorder = (score: number) =>
+  score >= 75
+    ? "border-emerald-300"
+    : score >= 50
+    ? "border-amber-300"
+    : "border-red-300";
 
 const JobMatcherPage = () => {
   const [mode, setMode] = useState<"manual" | "resume">("manual");
@@ -90,17 +104,20 @@ const JobMatcherPage = () => {
   return (
     <div className="bg-page min-h-screen pt-20 px-4 md:px-8 pb-12">
       <div className="max-w-3xl mx-auto flex flex-col gap-4">
+        {/* Mode switch */}
         <div className="glass-card p-1.5 flex gap-1.5">
           {(["manual", "resume"] as const).map((m) => (
             <button
               key={m}
-              onClick={() => { 
+              onClick={() => {
                 setMode(m);
                 setResult(null);
                 setError("");
               }}
               className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 capitalize ${
-                mode === m ? "btn-primary" : "text-white/40 hover:text-white/70"
+                mode === m
+                  ? "btn-primary"
+                  : "text-[#3F5B6B] hover:text-[#0F2A3A]"
               }`}
             >
               {m === "manual" ? "Enter Skills Manually" : "Upload Resume"}
@@ -108,10 +125,11 @@ const JobMatcherPage = () => {
           ))}
         </div>
 
+        {/* Manual mode */}
         {mode === "manual" && (
           <div className="glass-card p-6 flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-              <label className="text-xs text-white/30 uppercase tracking-widest">
+              <label className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
                 Your Skills
               </label>
               <div className="flex gap-2">
@@ -120,7 +138,7 @@ const JobMatcherPage = () => {
                   onChange={(e) => setskill(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addSkill()}
                   placeholder="e.g. React, Python, SQL..."
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-indigo-500/50 transition-colors"
+                  className="flex-1 bg-white border border-[#E3D9BF] rounded-xl px-4 py-2.5 text-sm text-[#0F2A3A] placeholder:text-[#3F5B6B]/60 outline-none focus:border-[#16587B] transition-colors"
                 />
                 <button
                   onClick={addSkill}
@@ -132,9 +150,10 @@ const JobMatcherPage = () => {
               {skills.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-1">
                   {skills.map((s) => (
-                    <span className="feature-pill gap-2 text-yellow-600 " key={s}>
+                    <span className="feature-pill gap-2" key={s}>
                       {s}{" "}
                       <button
+                        aria-label={`Remove ${s}`}
                         onClick={() => {
                           setSkills((p) => p.filter((x) => x !== s));
                         }}
@@ -148,20 +167,21 @@ const JobMatcherPage = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-xs text-white/30 uppercase tracking-widest">
+              <label className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
                 Experience & Background
               </label>
               <textarea
                 value={experience}
                 onChange={(e) => setExp(e.target.value)}
                 rows={4}
-                placeholder="e.g. 2 Years of frontend development, worked on e-commerce projects, familier with agile teams..."
-                className=" bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-indigo-500/50 transition-colors"
+                placeholder="e.g. 2 years of frontend development, worked on e-commerce projects, familiar with agile teams..."
+                className="w-full bg-white border border-[#E3D9BF] rounded-xl px-4 py-2.5 text-sm text-[#0F2A3A] placeholder:text-[#3F5B6B]/60 outline-none focus:border-[#16587B] transition-colors"
               />
             </div>
           </div>
         )}
 
+        {/* Resume upload mode */}
         {mode === "resume" && (
           <div
             onDragOver={(e) => e.preventDefault()}
@@ -171,20 +191,20 @@ const JobMatcherPage = () => {
               if (f) handleFileChange(f);
             }}
             onClick={() => fileRef.current?.click()}
-            className="glass-card border-dashed border-white/15 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer hover:border-indigo-500/40 hover:bg-white/2 transition-all duration-300 group"
+            className="glass-card border-dashed border-[#16587B]/40 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer hover:border-[#16587B] hover:bg-white transition-all duration-300 group"
           >
-            <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border-dashed border-indigo-500/20 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-14 h-14 rounded-2xl bg-[#84B3CE]/40 border border-dashed border-[#16587B]/30 flex items-center justify-center group-hover:scale-105 transition-transform">
               {file ? (
-                <FileText size={22} className="text-emerald-400" />
+                <FileText size={22} className="text-[#0F2A3A]" />
               ) : (
-                <Upload size={32} className="text-indigo-400" />
+                <Upload size={32} className="text-[#0F2A3A]" />
               )}
             </div>
             <div className="text-center">
-              <p className="font-semibold text-white/80">
+              <p className="font-semibold text-[#0F2A3A]">
                 {file ? file.name : "Drop your resume here"}
               </p>
-              <p className="text-white/35 text-sm mt-0.5">
+              <p className="text-[#3F5B6B] text-sm mt-0.5">
                 or click to browse • PDF only • max 5MB
               </p>
             </div>
@@ -201,8 +221,9 @@ const JobMatcherPage = () => {
             />
           </div>
         )}
+
         {error && (
-          <p className="text-red-400 text-sm flex items-center gap-1.5">
+          <p className="text-red-700 text-sm flex items-center gap-1.5">
             <AlertCircle size={14} /> {error}
           </p>
         )}
@@ -218,20 +239,21 @@ const JobMatcherPage = () => {
 
         {loading && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Loader2 size={36} className="text-orange-600 animate-spin" />
-            <p className="text-white/40 text-sm">
-              Find your best job matches...
+            <Loader2 size={36} className="text-[#16587B] animate-spin" />
+            <p className="text-[#3F5B6B] text-sm">
+              Finding your best job matches...
             </p>
           </div>
         )}
 
+        {/* Results */}
         {result && !loading && (
           <div className="flex flex-col gap-4">
             <div className="glass-card p-5">
-              <p className="text-xs text-white/30 uppercase tracking-widest mb-2">
+              <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold mb-2">
                 Summary
               </p>
-              <p className="text-sm text-white/60 leading-relaxed">
+              <p className="text-sm text-[#0F2A3A] leading-relaxed">
                 {result.summary}
               </p>
             </div>
@@ -239,20 +261,20 @@ const JobMatcherPage = () => {
             {result.jobs.map((job, i) => (
               <div
                 key={i}
-                className={`glass-card p-6 flex flex-col gap-4 border ${matchBg(
+                className={`glass-card p-6 flex flex-col gap-4 border ${matchBorder(
                   job.matchScore
                 )}`}
               >
                 <div className="flex items-start justify-between gap-3 flex-wrap">
                   <div>
-                    <h3 className="font-bold text-white">{job.title}</h3>
-                    <p className="text-white/45 text-sm mt-0.5">
+                    <h3 className="font-bold text-[#0F2A3A]">{job.title}</h3>
+                    <p className="text-[#3F5B6B] text-sm mt-0.5">
                       {job.company} • {job.location} • {job.type}
                     </p>
                   </div>
 
                   <span
-                    className={`text-2xl font-black shrink-0 ${matchColor(
+                    className={`text-2xl font-black shrink-0 ${matchText(
                       job.matchScore
                     )}`}
                   >
@@ -271,18 +293,18 @@ const JobMatcherPage = () => {
                 <div className="divider-subtle" />
 
                 <div className="flex flex-col gap-2">
-                  <p className="text-xs text-white/30 uppercase tracking-widest">
+                  <p className="text-xs text-[#3F5B6B] uppercase tracking-widest font-semibold">
                     Why you match
                   </p>
-                  <p className="text-sm text-white/55 leading-relaxed">
+                  <p className="text-sm text-[#0F2A3A] leading-relaxed">
                     {job.whyMatch}
                   </p>
                 </div>
 
-                <div className="flex items-start gap-2 text-sm text-white/60 bg-white/4 rounded-xl p-3">
+                <div className="flex items-start gap-2 text-sm text-[#0F2A3A] bg-[#84B3CE]/25 rounded-xl p-3">
                   <ChevronRight
                     size={14}
-                    className="text-indigo-400 shrink-0 mt-0.5"
+                    className="text-[#16587B] shrink-0 mt-0.5"
                   />
                   {job.applyTip}
                 </div>

@@ -21,7 +21,7 @@ const CTABanner = () => {
           <br />
           <span className="text-gradient">waiting for you.</span>
         </h2>
-        <p className="text-white/40 mb-8 relative z-10">
+        <p className="text-[#5A4030]  mb-8 relative z-10">
           Join thousands of job seekers using CarrerAI to get hired faster.
         </p>
         <Link

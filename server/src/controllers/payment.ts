@@ -7,8 +7,8 @@ import Payment from "../models/Payment.js";
 
 // change prices to whatever you want (NPR)
 const PLANS: Record<number, { amount: number; days: number }> = {
-  1: { amount: 399, days: 30 },
-  6: { amount: 1999, days: 180 },
+  1: { amount: 1500, days: 30 },
+  6: { amount: 5000, days: 180 },
 };
 
 const sign = (message: string) =>

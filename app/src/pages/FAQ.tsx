@@ -1,3 +1,5 @@
+import { HelpCircle } from "lucide-react";
+
 const faqs = [
   {
     question: "What is CareerLens?",
@@ -9,7 +11,7 @@ const faqs = [
     answer:
       "ATS stands for Applicant Tracking System. It is software used by many employers to scan, filter, and rank resumes before they reach recruiters. Using ATS-friendly formatting and relevant keywords can significantly improve your chances of being shortlisted.",
   },
-  
+
   {
     question: "How is the ATS score calculated?",
     answer:
@@ -56,52 +58,58 @@ const faqs = [
       "CareerLens offers a free plan with essential AI features. Premium plans unlock additional analyses, higher usage limits, advanced resume insights, and enhanced job matching.",
   },
   {
-   
-  question: "How do I upgrade my plan?",
-  answer:
-    "To upgrade your plan, sign in to your CareerLens account and navigate to your Profile page. Click the 'Upgrade Plan' button, select the subscription that best fits your needs, and complete the payment process. Once your payment is successful, your account will be upgraded automatically, giving you immediate access to premium features.",
-},
-  
+    question: "How do I upgrade my plan?",
+    answer:
+      "To upgrade your plan, sign in to your CareerLens account and navigate to your Profile page. Click the 'Upgrade Plan' button, select the subscription that best fits your needs, and complete the payment process. Once your payment is successful, your account will be upgraded automatically, giving you immediate access to premium features.",
+  },
+
   {
     question: "Who should use CareerLens?",
     answer:
       "CareerLens is designed for students, fresh graduates, job seekers, professionals looking to switch careers, and anyone who wants to create stronger, ATS-friendly resumes.",
   },
   {
-    question:"What types of resume templates are available on CareerLens",
+    question: "What types of resume templates are available on CareerLens",
     answer:
       " Mero CV offers 25 professionally designed resume templates across five categories to suit various career needs, Entry-Level: Perfect for students and recent graduates starting their careers. ",
   },
 ];
+
 const FAQ = () => {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-30 text-white">
+    <div className="max-w-3xl mx-auto px-6 pt-32 pb-20 text-[#0F2A3A]">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-white">
-          Frequently Asked Questions
+        <span className="feature-pill inline-flex mb-4">
+          <HelpCircle size={11} className="text-[#16587B]" /> Help center
+        </span>
+        <h1
+          className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#0F2A3A]"
+          style={{ fontFamily: "'Syne', sans-serif" }}
+        >
+          Frequently Asked <span className="text-gradient">Questions</span>
         </h1>
-        <p className="mt-4 text-gradient">
+        <p className="mt-4 text-[#3F5B6B] max-w-md mx-auto">
           Find answers to the most common questions about CareerLens.
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {faqs.map((faq, index) => (
           <details
             key={index}
-            className="group rounded-xl border border-white/10 bg-white/5 overflow-hidden"
+            className="group rounded-2xl border border-[#E3D9BF] bg-[#FBF8EF] overflow-hidden transition-colors hover:border-[#16587B] open:border-[#16587B] open:bg-white"
           >
-            <summary className="flex cursor-pointer list-none items-center justify-between p-5 font-semibold text-lg hover:bg-white/10 transition">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold text-base md:text-lg text-[#0F2A3A] [&::-webkit-details-marker]:hidden">
               {faq.question}
 
-              <span className="text-2xl transition-transform duration-300 group-open:rotate-45">
+              <span className="shrink-0 w-8 h-8 rounded-full bg-[#84B3CE]/40 text-[#0F2A3A] flex items-center justify-center text-xl leading-none transition-transform duration-300 group-open:rotate-45 group-open:bg-[#16587B] group-open:text-white">
                 +
               </span>
             </summary>
 
-            <div className="border-t border-white/10 px-5 py-4">
-              <p className="text-white/60 leading-7">
-                {faq.answer}
+            <div className="border-t border-[#E3D9BF] px-5 py-4">
+              <p className="text-[#3F5B6B] leading-7 text-sm md:text-base">
+                {faq.answer.trim()}
               </p>
             </div>
           </details>

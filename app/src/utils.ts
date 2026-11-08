@@ -46,7 +46,7 @@ export const plans = [
   },
   {
     name: "Pro 6-Month",
-    price: "Rs.7500",
+    price: "Rs.5000",
     period: "/ 6 months",
     badge: "Best Value",
     desc: "Save 17% vs monthly",

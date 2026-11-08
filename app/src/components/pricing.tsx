@@ -28,19 +28,15 @@ function StatusBadge() {
       ? "Pro Monthly"
       : "Pro";
 
-  return (
+    return (
     <div
       className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border mb-8 ${
         isPro
-          ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-          : "bg-white/5 border-white/10 text-white/50"
+          ? "bg-[#16587B] border-[#033c5b] text-white"
+          : "bg-[#84B3CE]/30 border-[#16587B]/30 text-[#0F2A3A]"
       }`}
     >
-      <span
-        className={`w-2 h-2 rounded-full ${
-          isPro ? "bg-emerald-400" : "bg-white/30"
-        }`}
-      />
+      <span className="w-2 h-2 rounded-full bg-[#eab044]" />
 
       {isPro
         ? `${planLabel} active • expires ${new Date(
@@ -54,6 +50,7 @@ function StatusBadge() {
     </div>
   );
 }
+
 
 // Handles the subscription button and eSewa checkout
 function PlanCTA({
@@ -74,11 +71,14 @@ function PlanCTA({
     user?.subscription &&
     new Date() < new Date(user.subscription);
 
+  // status text color depends on the card background
+  const statusText = highlight ? "text-white/80" : "text-[#4A4A63]";
+
   // All hooks are declared before conditional returns
   if (isAuth) {
     if (plan.name === "Free") {
       return (
-        <p className="mt-auto text-center text-xs text-white/30 py-3">
+        <p className={`mt-auto text-center text-xs py-3 ${statusText}`}>
           {isPro ? "Your previous plan" : "✔️ Currently active"}
         </p>
       );
@@ -90,7 +90,7 @@ function PlanCTA({
         user?.subscriptionDuration === getPlanDuration(plan);
 
       return (
-        <p className="mt-auto text-center text-xs text-white/30 py-3">
+        <p className={`mt-auto text-center text-xs font-medium py-3 ${statusText}`}>
           {isCurrentPlan
             ? "✔️ Already subscribed"
             : "Included in your Pro plan"}
@@ -157,17 +157,17 @@ function PlanCTA({
   };
 
   return (
-    <button
-      className={`mt-auto text-center text-sm font-semibold py-3 rounded-xl transition-all duration-200 ${
-        highlight
-          ? "btn-primary"
-          : "bg-white/6 hover:bg-white/10 border border-white/10 text-white"
-      }`}
-      onClick={handleSubscribe}
-      disabled={loading}
-    >
-      {loading ? "Redirecting to eSewa..." : plan.cta}
-    </button>
+  <button
+  className={`mt-auto text-center text-sm font-semibold py-3 rounded-xl transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
+    highlight
+      ? "bg-[#eab044] text-[#0F2A3A] hover:bg-[#f2bd5b]"
+      : "border border-[#16587B] text-[#16587B] hover:bg-[#16587B] hover:text-white"
+  }`}
+  onClick={handleSubscribe}
+  disabled={loading}
+>
+  {loading ? "Redirecting to eSewa..." : plan.cta}
+</button>
   );
 }
 
@@ -179,10 +179,10 @@ const Pricing = () => {
       className="py-24 px-6 md:px-12 max-w-7xl mx-auto"
     >
       <div className="text-center mb-16">
-        <span className="feature-pill inline-flex mb-4">
+        <span className="feature-pill inline-flex mb-4  text-white bg-[#f9a60d]">
           <Shield
             size={11}
-            className="text-orange-300"
+            className="text-white"
           />{" "}
           Simple pricing
         </span>
@@ -197,7 +197,7 @@ const Pricing = () => {
           </span>
         </h2>
 
-        <p className="text-white/40 mt-4 max-w-md mx-auto">
+        <p className="text-[#5A4030] mt-4 max-w-md mx-auto">
           Your first 3 requests are completely free - no card needed.
         </p>
 
@@ -210,18 +210,18 @@ const Pricing = () => {
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className={`glass-card p-8 flex flex-col gap-6 relative transition-all duration-300 ${
-              plan.highlight
-                ? "border-indigo-500/10 shadow-2xl shadow-indigo-500/10 scale-[1.02]"
-                : "hover:border-white/14"
-            }`}
+        className={`p-8 flex flex-col gap-6 relative rounded-2xl border transition-all duration-300 ${
+  plan.highlight
+    ? "bg-[#16587B] border-[#16587B] text-white shadow-xl scale-[1.02]"
+    : "bg-white border-[#DAD6CC] text-[#0B0B1E] hover:border-[#14198F]"
+}`}
           >
             {plan.badge && (
               <span
-                className={`absolute -top-2 left-1/2 -translate-x-1/2 text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${
+                className={`absolute -top-3 left-1/2 -translate-x-1/2 text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${
                   plan.highlight
-                    ? "bg-linear-to-r from-orange-300 to-yellow-500 text-white"
-                    : "bg-white/10 text-white/60"
+                    ? "bg-[#f9a60d] text-[#0B0B1E]"
+                    : "bg-[#16587B] text-white"
                 }`}
               >
                 {plan.badge}
@@ -229,41 +229,62 @@ const Pricing = () => {
             )}
 
             <div>
-              <p className="text-xs text-white/35 uppercase tracking-widest mb-1">
+              <p
+                className={`text-xs uppercase tracking-widest mb-1 ${
+                  plan.highlight ? "text-white/70" : "text-[#4A4A63]"
+                }`}
+              >
                 {plan.name}
               </p>
 
               <div className="flex items-end gap-1">
                 <span
-                  className="text-4xl font-black"
-                  style={{ fontFamily: "'Syne', sans-serif" }}
-                >
-                  {plan.price}
-                </span>
-
+  className={`text-4xl font-black ${
+    plan.highlight ? "text-white" : "text-[#16587B]"
+  }`}
+  style={{ fontFamily: "'Syne', sans-serif" }}
+>
+  {plan.price}
+</span>
                 {plan.period && (
-                  <span className="text-white/35 text-sm mb-1">
+                  <span
+                    className={`text-sm mb-1 ${
+                      plan.highlight ? "text-white/70" : "text-[#4A4A63]"
+                    }`}
+                  >
                     {plan.period}
                   </span>
                 )}
               </div>
 
-              <p className="text-white/40 text-sm mt-1">
+              <p
+                className={`text-sm mt-1 ${
+                  plan.highlight ? "text-white/80" : "text-[#4A4A63]"
+                }`}
+              >
                 {plan.desc}
               </p>
             </div>
 
-            <div className="divider-subtle"></div>
+            <div
+              className={`w-full border-t ${
+                plan.highlight ? "border-white/20" : "border-[#DAD6CC]"
+              }`}
+            ></div>
 
             <ul className="flex flex-col gap-3">
               {plan.features.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-sm text-white/60"
+                  className={`flex items-start gap-2 text-sm ${
+                    plan.highlight ? "text-white" : "text-[#0B0B1E]"
+                  }`}
                 >
                   <CheckCircle
                     size={14}
-                    className="text-yellow-500 shrink-0 mt-0.5"
+                    className={`shrink-0 mt-0.5 ${
+                      plan.highlight ? "text-[#f6aa07]" : "text-[#16587B]"
+                    }`}
                   />
                   {item}
                 </li>

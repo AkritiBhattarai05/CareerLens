@@ -1,17 +1,16 @@
 function Footer() {
   return (
-    <footer className="mt-20 px-6 md:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-white/45 text-xs 
-bg-[#18245a]/95 backdrop-blur-xl border-t border-white/10">
+    <footer className="navbar border-b-0 border-t border-white/10 mt-20 px-6 md:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-white/80 text-xs">
       <span
         style={{ fontFamily: "'Syne', sans-serif" }}
-        className="font-bold text-white/40 text-sm"
+        className="font-bold text-white text-sm"
       >
-        CareerLens
+        Career<span className="text-[#A9CDE3]">Lens</span>
       </span>
       <span>©️ {new Date().getFullYear()} CareerLens. All rights reserved.</span>
       <div className="flex gap-5">
         {["Privacy", "Terms", "Contact"].map((i) => (
-          <a key={i} href="#" className="hover:text-white/80 transition-colors">
+          <a key={i} href="#" className="hover:text-[#A9CDE3] transition-colors">
             {i}
           </a>
         ))}
