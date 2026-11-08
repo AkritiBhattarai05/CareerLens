@@ -72,6 +72,13 @@ export const paymentVerification = TryCatch(
     const { data } = req.body;
     if (!data) return res.status(400).json({ message: "No payment data" });
 
+    // Guard: Ensure user is authenticated
+    if (!req.user?._id) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    const userId = req.user._id;
+
     let decoded: any;
     try {
       decoded = JSON.parse(Buffer.from(data, "base64").toString("utf-8"));
@@ -92,12 +99,12 @@ export const paymentVerification = TryCatch(
     // 2. find OUR record (never trust the amount from the browser)
     const payment: any = await Payment.findOne({
       transaction_uuid: decoded.transaction_uuid,
-      user: req.user?._id,
+      user: userId,
     });
     if (!payment) return res.status(404).json({ message: "Payment not found" });
 
     if (payment.status === "COMPLETE") {
-      const u = await User.findById(req.user?._id);
+      const u = await User.findById(userId);
       return res.json({ message: "Already verified", updatedUser: u });
     }
 
@@ -133,7 +140,7 @@ export const paymentVerification = TryCatch(
     const expiryDate = new Date(Date.now() + plan.days * 24 * 60 * 60 * 1000);
 
    const updatedUser = await User.findByIdAndUpdate(
-  req.user?._id,
+  userId,
   {
     subscription: expiryDate,
     subscriptionDuration: payment.duration,
