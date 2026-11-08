@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useAppData } from "../context/AppContext"
 import { Link } from "react-router-dom"
 import { Menu, X } from "lucide-react";
+import LogoMark from "../components/Logo";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -9,18 +10,15 @@ const Navbar = () => {
 
   return (
     <nav className="navbar fixed top-0 inset-x-0 z-50 flex items-center justify-between px-6 md:px-12 py-4">
-      <Link to={'/'} className="flex place-items-center gap-2.5">
-        <div className="w-8 h-8 rounded-lg bg-[#F5EEDD] flex justify-center items-center shadow-lg text-2xl">
-          📚
-        </div>
-        <span
-          className="font-bold text-lg tracking-tight text-white"
-          style={{ fontFamily: " 'Syne', sans-serif" }}
-        >
-          Career
-          <span className="text-[#A9CDE3]">Lens</span>
-        </span>
-      </Link>
+      <Link to={'/'} className="flex items-center gap-1">
+  <LogoMark size={36} />
+  <span
+    className="-ml-1 font-bold text-lg tracking-tight text-white"
+    style={{ fontFamily: " 'Syne', sans-serif" }}
+  >
+    Career<span className="text-[#A9CDE3]">Lens</span>
+  </span>
+</Link>
 
       <div className="hidden md:flex items-center gap-8 text-sm text-white/85">
         <Link to={"/analyse"} className="hover:text-[#A9CDE3] transition-colors">
